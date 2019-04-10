@@ -13,9 +13,6 @@ import (
 	"github.com/nlopes/slack"
 )
 
-// Env ... Variable for environment loading
-var Env envConfig
-
 func init() {
 	loadEnvironment()
 }
@@ -64,7 +61,7 @@ func main() {
 			continue
 		}
 
-		log.Printf("CID: %#v, previousName: %#v, requestName: %#v, NewCName: %#v\n", channelID, channelInfo.Name ,newChannelName, channel.Name)
+		log.Printf("CID: %#v, previousName: %#v, requestName: %#v, NewCName: %#v\n", channelID, channelInfo.Name, newChannelName, channel.Name)
 
 		// 数秒くらい待ってあげましょうよ、という気持ちの現れ
 		time.Sleep(delay)
@@ -84,5 +81,3 @@ func setResultMessageParameters() slack.MsgOption {
 	}
 	return slack.MsgOptionAttachments(attachment)
 }
-
-
