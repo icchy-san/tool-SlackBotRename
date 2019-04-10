@@ -51,6 +51,7 @@ func main() {
 		}
 
 		channelID, newChannelName := record[0], record[1]
+		channelInfo, _ := client.GetConversationInfo(channelID, false)
 
 		channel, err := client.RenameChannel(channelID, newChannelName)
 		if err != nil {
@@ -63,7 +64,7 @@ func main() {
 			continue
 		}
 
-		log.Printf("CID: %#v, requestName: %#v, NewCName: %#v\n", channelID, newChannelName, channel.Name)
+		log.Printf("CID: %#v, previousName: %#v, requestName: %#v, NewCName: %#v\n", channelID, channelInfo.Name ,newChannelName, channel.Name)
 
 		// 数秒くらい待ってあげましょうよ、という気持ちの現れ
 		time.Sleep(delay)
@@ -79,7 +80,7 @@ func main() {
 // setResultMessageParameters ... 実行結果ごのメッセージ設定関数
 func setResultMessageParameters() slack.MsgOption {
 	attachment := slack.Attachment{
-		Text: "プロセスが終了しました。チャネル名が表示された場合は、表示さているチャンネルが作成できませんでした。\nすでに存在していないか確認して下さい。",
+		Text: "プロセスが終了しました。チャネル名が表示された場合は、表示さているチャンネルをリネームすることができませんでした。",
 	}
 	return slack.MsgOptionAttachments(attachment)
 }
